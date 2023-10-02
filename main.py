@@ -1,5 +1,6 @@
 from typing import Union
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
 from deep_translator import GoogleTranslator
 
 app = FastAPI()
@@ -7,12 +8,14 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
-
-
-@app.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message":"Hello {name}"}
+    html_content="""
+    <html>
+    <body>
+        <small>Tools for Mauro Rios.</small>
+    </body>
+    </html>
+    """
+    return HTMLResponse(content=html_content, status_code=200)
 
 @app.get("/tools/translate")
 async def get_lang(keys: Union[str,None] = None,lng:Union[str,None] = None):
